@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">小米步数管理</string>
+    <string name="text_today_steps">今日步数：%d</string>
+    <string name="text_add_steps">增加步数：</string>
+    <string name="text_add_steps_hint">请输入需要增加的步数</string>
+    <string name="toast_exit_app">再按一次退出程序</string>
+    <string name="btn_add_step">立即增加</string>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="five_dp">5dp</dimen>
+    <dimen name="ten_dp">10dp</dimen>
+    <dimen name="fifty_dp">50dp</dimen>
+    <string name="use_app_tip">
+        本软件为开源免费软件，任何收费购买途径均为假冒！！！\n\n
+        使   用   说   明：\n
+        ①.在输入框填入单次需要增加的步数\n
+        ②.点击立即增加按钮\n\n
+        如何判断是否增加成功？\n
+        ①.观察是否弹出增加步数成功提示\n
+        ②.小米负一屏(信息助手)查看步数\n\n
+        开   发   者   信   息：\n
+        作者：XyLin\n
+        邮箱：android.xylin@foxmail.com\n\n
+        使   用   须   知：\n
+        本软件仅供个人测试使用，不能用于任何商业及非法用途。请您不要在法律的边缘试探，出现任何后果请自行承担！！！\n
+        程序如有侵权，请联系本人进行删除。
+    </string>
+    <string name="toast_add_steps_failed">增加步数失败，具体原因为</string>
+    <string name="toast_add_steps_success">增加指定步数成功</string>
+</resources>
