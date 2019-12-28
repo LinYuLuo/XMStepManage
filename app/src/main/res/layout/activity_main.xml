@@ -31,7 +31,7 @@
         android:layout_above="@id/btnAddSteps"
         android:layout_toRightOf="@id/tvAddSteps"
         android:hint="@string/text_add_steps_hint"
-        android:inputType="number"
+        android:inputType="numberSigned"
         android:textSize="@dimen/text_size" />
 
     <Button

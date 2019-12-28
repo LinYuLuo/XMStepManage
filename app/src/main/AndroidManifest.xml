@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.xylin.miui.step.manage">
 
-    <uses-permission android:name="miui.permission.READ_STEPS" />
     <uses-permission android:name="miui.permission.WRITE_STEPS" />
+    <uses-permission android:name="miui.permission.READ_STEPS" />
 
     <application
         android:icon="@drawable/app_icon"
