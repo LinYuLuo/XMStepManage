@@ -1,13 +1,11 @@
 package cn.xylin.miui.step.manage;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -71,27 +69,24 @@ public class MainActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-        }).
-
-                start();
+        }).start();
     }
 
     private String getTodayTime(boolean flag) {
         return String.format("%s%s", timeFormat.format(System.currentTimeMillis()).substring(0, 11), flag ? "00:00:00" : "23:59:59");
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     public void startStepAdd(View view) {
         try {
-                int addSteps = Integer.parseInt(edtAddSteps.getText().toString());
-                ContentValues values = new ContentValues();
-                values.put(BEGIN_TIME, (System.currentTimeMillis() - 1200000L));
-                values.put(END_TIME, System.currentTimeMillis());
-                values.put(MODE, 2);
-                values.put(STEPS, addSteps);
-                getContentResolver().insert(STEP_URI, values);
-                Toast.makeText(this, R.string.toast_add_steps_success, Toast.LENGTH_SHORT).show();
-                getTodayStep();
+            int addSteps = Integer.parseInt(edtAddSteps.getText().toString());
+            ContentValues values = new ContentValues();
+            values.put(BEGIN_TIME, (System.currentTimeMillis() - 600000L));
+            values.put(END_TIME, System.currentTimeMillis());
+            values.put(MODE, 2);
+            values.put(STEPS, addSteps);
+            getContentResolver().insert(STEP_URI, values);
+            Toast.makeText(this, R.string.toast_add_steps_success, Toast.LENGTH_SHORT).show();
+            getTodayStep();
         } catch (Exception e) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.toast_add_steps_failed)
