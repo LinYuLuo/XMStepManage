@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -78,19 +79,35 @@ public class MainActivity extends Activity {
 
     public void startStepAdd(View view) {
         try {
-            int addSteps = Integer.parseInt(edtAddSteps.getText().toString());
             ContentValues values = new ContentValues();
             values.put(BEGIN_TIME, (System.currentTimeMillis() - 600000L));
             values.put(END_TIME, System.currentTimeMillis());
             values.put(MODE, 2);
-            values.put(STEPS, addSteps);
+            values.put(STEPS, Integer.parseInt(edtAddSteps.getText().toString()));
             getContentResolver().insert(STEP_URI, values);
             Toast.makeText(this, R.string.toast_add_steps_success, Toast.LENGTH_SHORT).show();
             getTodayStep();
-        } catch (Exception e) {
+        } catch (SecurityException e) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.toast_add_steps_failed)
-                    .setMessage(e.toString())
+                    .setMessage(R.string.dialog_message_add_step_security_error)
+                    .setPositiveButton(R.string.btn_ok, null)
+                    .setNegativeButton(R.string.btn_convert_sys_app, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            if (!RootTool.haveRoot(MainActivity.this)) {
+                                Toast.makeText(MainActivity.this, R.string.toast_no_root, Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            Toast.makeText(MainActivity.this, RootTool.convertSystemApp(MainActivity.this) ? R.string.toast_convert_sys_app_success : R.string.toast_convert_syst_app_fail, Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .create()
+                    .show();
+        } catch (NumberFormatException e) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.toast_add_steps_failed)
+                    .setMessage(R.string.dialog_message_int_parser_error)
                     .setPositiveButton(R.string.btn_ok, null)
                     .create()
                     .show();

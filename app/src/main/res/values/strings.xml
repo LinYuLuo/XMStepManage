@@ -25,6 +25,20 @@
         程序如有侵权，请联系本人进行删除。
     </string>
     <string name="toast_add_steps_failed">增加步数失败</string>
+    <string name="dialog_message_error">出现异常，请将该对话框截图并反馈给开发者。\n%s</string>
+    <string name="dialog_message_int_parser_error">您输入的不是一个有效数值，请检查输入是否正确！</string>
+    <string name="dialog_message_add_step_security_error">
+        增加步数失败，未能获取写入步数权限\n
+        请核心破解手机后重试，也可尝试转换为系统应用\n
+        注意：\n
+        转换系统应用一旦成功就会自动重启手机\n
+        由重启导致的数据损失开发者不负任何责任\n
+        请确认您没有数据需要进行保存
+    </string>
     <string name="toast_add_steps_success">增加指定步数成功</string>
     <string name="btn_ok">确定</string>
+    <string name="btn_convert_sys_app">转换为系统应用</string>
+    <string name="toast_no_root">设备未ROOT或未授予APP访问ROOT权限</string>
+    <string name="toast_convert_syst_app_fail">转换失败，可能未解锁System分区或者其它问题</string>
+    <string name="toast_convert_sys_app_success">转换系统APP成功</string>
 </resources>
