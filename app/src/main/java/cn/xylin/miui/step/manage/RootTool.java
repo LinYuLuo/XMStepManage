@@ -2,6 +2,7 @@ package cn.xylin.miui.step.manage;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
@@ -10,6 +11,8 @@ import java.io.IOException;
  * @date 2020年1月9日
  **/
 class RootTool {
+    private static final String SYS_APP_DIR = Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1 ? "priv-app" : "app";
+
     private static Process getRootProcess() throws IOException {
         return Runtime.getRuntime().exec("su");
     }
@@ -52,9 +55,13 @@ class RootTool {
     static boolean convertSystemApp(Context context) {
         return getExecCommandResult(context,
                 "mount -o rw,remount -t auto /system",
-                "mkdir /system/app/StepManage/",
-                String.format("cat %s > /system/app/StepManage/StepManage.apk", context.getApplicationInfo().sourceDir),
-                "cd system/app/StepManage/",
+                String.format("mkdir /system/%s/StepManage/", SYS_APP_DIR),
+                String.format(
+                        "cat %s > /system/%s/StepManage/StepManage.apk",
+                        context.getApplicationInfo().sourceDir,
+                        SYS_APP_DIR
+                ),
+                String.format("cd system/%s/StepManage/", SYS_APP_DIR),
                 "chmod 644 StepManage.apk",
                 "reboot"
         ) == 0;

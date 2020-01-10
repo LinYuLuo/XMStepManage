@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
                                 Toast.makeText(MainActivity.this, R.string.toast_no_root, Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            Toast.makeText(MainActivity.this, RootTool.convertSystemApp(MainActivity.this) ? R.string.toast_convert_sys_app_success : R.string.toast_convert_syst_app_fail, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, RootTool.convertSystemApp(MainActivity.this) ? R.string.toast_convert_sys_app_success : R.string.toast_convert_sys_app_fail, Toast.LENGTH_SHORT).show();
                         }
                     })
                     .create()

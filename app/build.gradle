@@ -6,8 +6,8 @@ android {
         applicationId "cn.xylin.miui.step.manage"
         minSdkVersion 14
         targetSdkVersion 29
-        versionCode 200119
-        versionName "1.32"
+        versionCode 20011023
+        versionName "1.33"
     }
     buildTypes {
         release {
