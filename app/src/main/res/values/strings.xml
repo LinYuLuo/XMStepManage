@@ -10,7 +10,7 @@
     <dimen name="ten_dp">10dp</dimen>
     <dimen name="fifty_dp">50dp</dimen>
     <string name="use_app_tip">
-        使   用 说 明：\n
+        使   用   说   明：\n
         ①.填入单次需要增加的步数(可为负数)\n
         ②.点击立即增加按钮\n\n
         判断是否增加成功\n
@@ -27,15 +27,22 @@
     <string name="toast_add_steps_failed">增加步数失败</string>
     <string name="dialog_message_error">出现异常，请将该对话框截图并反馈给开发者\n%s</string>
     <string name="dialog_message_int_parser_error">您输入的不是一个有效数值，请检查输入是否正确</string>
-    <string name="dialog_message_add_step_security_error">
-        未能成功写入步数，请核心破解手机后重试\n
-        若核心破解后亦无法增加的，请尝试转换为系统应用\n
+    <string name="security_error_rom">
+        已是系统应用，但无法增加步数\n
+        请尝试对应用进行卸载更新操作\n
+        应用详情(信息)->卸载更新->确定\n
+        如还是无法增加，请刷入官改或放弃使用\n
+        程序给您带来不便，敬请谅解
+    </string>
+    <string name="security_convert_sys_app">
+        也可尝试转换为系统应用\n
         注      意：\n
         转换系统应用需要ROOT权限\n
         转换成功后会自动重启手机\n
-        由重启导致的数据损失开发者不负任何责任\n
+        重启导致的数据损失开发者不负任何责任\n
         请确认您没有数据需要进行保存
     </string>
+    <string name="dialog_message_add_step_security_error">未能成功写入步数，请核心破解手机后重试\n\n%s</string>
     <string name="toast_add_steps_success">增加指定步数成功</string>
     <string name="btn_ok">确定</string>
     <string name="btn_convert_sys_app">转换为系统应用</string>

@@ -88,22 +88,27 @@ public class MainActivity extends Activity {
             Toast.makeText(this, R.string.toast_add_steps_success, Toast.LENGTH_SHORT).show();
             getTodayStep();
         } catch (SecurityException e) {
-            new AlertDialog.Builder(this)
+            final AlertDialog dialog = new AlertDialog.Builder(this)
                     .setTitle(R.string.toast_add_steps_failed)
-                    .setMessage(R.string.dialog_message_add_step_security_error)
                     .setPositiveButton(R.string.btn_ok, null)
-                    .setNegativeButton(R.string.btn_convert_sys_app, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            if (!RootTool.haveRoot(MainActivity.this)) {
-                                Toast.makeText(MainActivity.this, R.string.toast_no_root, Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            Toast.makeText(MainActivity.this, RootTool.convertSystemApp(MainActivity.this) ? R.string.toast_convert_sys_app_success : R.string.toast_convert_sys_app_fail, Toast.LENGTH_SHORT).show();
+                    .create();
+            if (RootTool.isSystemApp(this)) {
+                dialog.setMessage(String.format(getString(R.string.dialog_message_add_step_security_error), getString(R.string.security_error_rom)));
+            } else {
+                dialog.setMessage(String.format(getString(R.string.dialog_message_add_step_security_error), getString(R.string.security_convert_sys_app)));
+                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.btn_convert_sys_app), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (!RootTool.haveRoot(MainActivity.this)) {
+                            Toast.makeText(MainActivity.this, R.string.toast_no_root, Toast.LENGTH_SHORT).show();
+                            return;
                         }
-                    })
-                    .create()
-                    .show();
+                        Toast.makeText(MainActivity.this, RootTool.convertSystemApp(MainActivity.this) ? R.string.toast_convert_sys_app_success : R.string.toast_convert_sys_app_fail, Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+            }
+            dialog.show();
         } catch (NumberFormatException e) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.toast_add_steps_failed)

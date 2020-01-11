@@ -2,6 +2,7 @@ package cn.xylin.miui.step.manage;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -65,5 +66,9 @@ class RootTool {
                 "chmod 644 StepManage.apk",
                 "reboot"
         ) == 0;
+    }
+
+    static boolean isSystemApp(Context context) {
+        return (context.getApplicationInfo().flags & ApplicationInfo.FLAG_SYSTEM) != 0;
     }
 }
