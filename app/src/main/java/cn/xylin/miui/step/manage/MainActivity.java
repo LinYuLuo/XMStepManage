@@ -4,16 +4,19 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
+import cn.xylin.miui.step.manage.util.Final;
+import cn.xylin.miui.step.manage.util.RootTool;
+import cn.xylin.miui.step.manage.util.Shared;
 
 /**
  * @author XyLin
@@ -26,13 +29,15 @@ public class MainActivity extends Activity {
     private final String MODE = "_mode";
     private final String STEPS = "_steps";
     private final String[] QUERY_FILED = {ID, BEGIN_TIME, END_TIME, MODE, STEPS};
-    private final Uri STEP_URI = Uri.parse("content://com.miui.providers.steps/item");
     private TextView tvTodaySteps;
     private EditText edtAddSteps;
     private int todayStepCount;
     private long clickTime = 0L;
     @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private Shared shared;
+    private AlertDialog.Builder dialogAppTip;
+    private int currentWorkMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         tvTodaySteps = findViewById(R.id.tvTodaySteps);
         edtAddSteps = findViewById(R.id.edtAddSteps);
+        dialogAppTip = new AlertDialog.Builder(this)
+                .setNegativeButton(R.string.btn_ok, null);
+        shared = new Shared(this);
+        currentWorkMode = shared.getInt(Shared.KEY_WORK_MODE);
         getTodayStep();
     }
 
@@ -48,7 +57,7 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 try {
-                    Cursor cursor = getContentResolver().query(STEP_URI, QUERY_FILED, null, null, null);
+                    Cursor cursor = getContentResolver().query(Final.STEP_URI, QUERY_FILED, null, null, null);
                     long todayBeginTime = timeFormat.parse(getTodayTime(true)).getTime();
                     long todayEndTime = timeFormat.parse(getTodayTime(false)).getTime();
                     if (cursor != null) {
@@ -77,46 +86,56 @@ public class MainActivity extends Activity {
         return String.format("%s%s", timeFormat.format(System.currentTimeMillis()).substring(0, 11), flag ? "00:00:00" : "23:59:59");
     }
 
+    private ContentValues getAddStepValues() throws NumberFormatException {
+        ContentValues values = new ContentValues();
+        values.put(BEGIN_TIME, (System.currentTimeMillis() - 600000L));
+        values.put(END_TIME, System.currentTimeMillis());
+        values.put(MODE, 2);
+        values.put(STEPS, Integer.parseInt(edtAddSteps.getText().toString()));
+        return values;
+    }
+
     public void startStepAdd(View view) {
         try {
-            ContentValues values = new ContentValues();
-            values.put(BEGIN_TIME, (System.currentTimeMillis() - 600000L));
-            values.put(END_TIME, System.currentTimeMillis());
-            values.put(MODE, 2);
-            values.put(STEPS, Integer.parseInt(edtAddSteps.getText().toString()));
-            getContentResolver().insert(STEP_URI, values);
+            getContentResolver().insert(Final.STEP_URI, getAddStepValues());
             Toast.makeText(this, R.string.toast_add_steps_success, Toast.LENGTH_SHORT).show();
             getTodayStep();
+            return;
         } catch (SecurityException e) {
-            final AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setTitle(R.string.toast_add_steps_failed)
-                    .setPositiveButton(R.string.btn_ok, null)
-                    .create();
-            if (RootTool.isSystemApp(this)) {
-                dialog.setMessage(String.format(getString(R.string.dialog_message_add_step_security_error), getString(R.string.security_error_rom)));
-            } else {
-                dialog.setMessage(String.format(getString(R.string.dialog_message_add_step_security_error), getString(R.string.security_convert_sys_app)));
-                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.btn_convert_sys_app), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (!RootTool.haveRoot(MainActivity.this)) {
-                            Toast.makeText(MainActivity.this, R.string.toast_no_root, Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        Toast.makeText(MainActivity.this, RootTool.convertSystemApp(MainActivity.this) ? R.string.toast_convert_sys_app_success : R.string.toast_convert_sys_app_fail, Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-                    }
-                });
-            }
-            dialog.show();
+            dialogAppTip.setMessage(
+                    currentWorkMode == Final.WORK_MODE_CORE ?
+                            R.string.add_step_error_core :
+                            currentWorkMode == Final.WORK_MODE_ROOT ?
+                                    R.string.add_step_error_root :
+                                    R.string.add_step_error_system
+            );
         } catch (NumberFormatException e) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.toast_add_steps_failed)
-                    .setMessage(R.string.dialog_message_int_parser_error)
-                    .setPositiveButton(R.string.btn_ok, null)
-                    .create()
-                    .show();
+            dialogAppTip.setMessage(R.string.dialog_message_int_parser_error);
         }
+        dialogAppTip.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_menu, menu);
+        setWorkModeMenuItemTitle(menu.findItem(R.id.menuSwitchWorkMode));
+        if(RootTool.isSystemApp(this)){
+            menu.findItem(R.id.menuUninstallAppByRoot).setVisible(true);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setWorkModeMenuItemTitle(MenuItem item) {
+        item.setTitle(
+                String.format(
+                        Final.CURRENT_WORK_MODE,
+                        currentWorkMode == Final.WORK_MODE_CORE ?
+                                Final.WORK_MODE_NAME_CORE :
+                                currentWorkMode == Final.WORK_MODE_ROOT ?
+                                        Final.WORK_MODE_NAME_ROOT :
+                                        Final.WORK_MODE_NAME_SYSTEM
+                )
+        );
     }
 
     @Override
@@ -130,5 +149,27 @@ public class MainActivity extends Activity {
             android.os.Process.killProcess(android.os.Process.myPid());
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuSwitchWorkMode: {
+                currentWorkMode++;
+                currentWorkMode %= 3;
+                shared.getEdit().putInt(Shared.KEY_WORK_MODE, currentWorkMode).editApply();
+                setWorkModeMenuItemTitle(item);
+                return true;
+            }
+            case R.id.menuWorkModeDescription:
+            case R.id.menuAboutApp: {
+                dialogAppTip.setMessage(item.getItemId() == R.id.menuWorkModeDescription ? R.string.work_mode_description : R.string.about_app);
+                dialogAppTip.show();
+                return true;
+            }
+            default: {
+                return Final.BOOL_NULL;
+            }
+        }
     }
 }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuSwitchWorkMode"
+        android:title="" />
+    <item
+        android:id="@+id/menuUninstallAppByRoot"
+        android:visible="false"
+        android:title="@string/menu_uninstall_app" />
+    <item
+        android:id="@+id/menuWorkModeDescription"
+        android:title="@string/menu_work_mode_description" />
+    <item
+        android:id="@+id/menuAboutApp"
+        android:title="@string/menu_title_about_app" />
+</menu>

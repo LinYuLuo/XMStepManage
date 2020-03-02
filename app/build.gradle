@@ -6,8 +6,8 @@ android {
         applicationId "cn.xylin.miui.step.manage"
         minSdkVersion 14
         targetSdkVersion 29
-        versionCode 20011112
-        versionName "1.34"
+        versionCode 20030222
+        versionName "1.341"
     }
     buildTypes {
         release {
@@ -15,8 +15,4 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

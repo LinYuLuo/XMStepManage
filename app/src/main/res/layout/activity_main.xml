@@ -1,57 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/five_dp"
+    android:paddingRight="@dimen/five_dp">
 
-    <TextView
-        android:id="@+id/tvTodaySteps"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/tvAddSteps"
-        android:layout_marginBottom="@dimen/five_dp"
-        android:layout_marginTop="@dimen/ten_dp"
-        android:gravity="center"
-        android:paddingLeft="@dimen/five_dp"
-        android:textSize="@dimen/text_size" />
+        android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/tvAddSteps"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/fifty_dp"
-        android:layout_above="@id/btnAddSteps"
-        android:gravity="center"
-        android:paddingLeft="@dimen/five_dp"
-        android:text="@string/text_add_steps"
-        android:textSize="@dimen/text_size" />
+        <TextView
+            android:id="@+id/tvTodaySteps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/ten_dp"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:textSize="@dimen/text_size" />
 
-    <EditText
-        android:id="@+id/edtAddSteps"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/fifty_dp"
-        android:layout_above="@id/btnAddSteps"
-        android:layout_toRightOf="@id/tvAddSteps"
-        android:hint="@string/text_add_steps_hint"
-        android:inputType="numberSigned"
-        android:textSize="@dimen/text_size" />
+        <TextView
+            android:id="@+id/tvAddSteps"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/fifty_dp"
+            android:layout_below="@id/tvTodaySteps"
+            android:gravity="center"
+            android:text="@string/text_add_steps"
+            android:textSize="@dimen/text_size" />
 
-    <Button
-        android:id="@+id/btnAddSteps"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/fifty_dp"
-        android:layout_above="@id/tvAppUseTip"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/five_dp"
-        android:layout_marginTop="@dimen/five_dp"
-        android:onClick="startStepAdd"
-        android:text="@string/btn_add_step" />
+        <EditText
+            android:id="@+id/edtAddSteps"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty_dp"
+            android:layout_below="@id/tvTodaySteps"
+            android:layout_toRightOf="@id/tvAddSteps"
+            android:layout_marginBottom="@dimen/ten_dp"
+            android:hint="@string/text_add_steps_hint"
+            android:inputType="numberSigned"
+            android:textSize="@dimen/text_size" />
 
-    <TextView
-        android:id="@+id/tvAppUseTip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/ten_dp"
-        android:paddingLeft="@dimen/five_dp"
-        android:text="@string/use_app_tip"
-        android:textSize="@dimen/text_size" />
-</RelativeLayout>
+        <Button
+            android:id="@+id/btnAddSteps"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/fifty_dp"
+            android:layout_below="@id/edtAddSteps"
+            android:layout_centerHorizontal="true"
+            android:onClick="startStepAdd"
+            android:text="@string/btn_add_step" />
+
+        <TextView
+            android:id="@+id/tvAppUseTip"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnAddSteps"
+            android:text="@string/use_app_tip"
+            android:textSize="@dimen/text_size" />
+    </RelativeLayout>
+</LinearLayout>
