@@ -14,9 +14,8 @@
             android:id="@+id/tvTodaySteps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginBottom="@dimen/ten_dp"
-            android:layout_marginTop="@dimen/ten_dp"
+            android:gravity="center"
             android:textSize="@dimen/text_size" />
 
         <TextView
@@ -34,26 +33,36 @@
             android:layout_height="@dimen/fifty_dp"
             android:layout_below="@id/tvTodaySteps"
             android:layout_toRightOf="@id/tvAddSteps"
-            android:layout_marginBottom="@dimen/ten_dp"
             android:hint="@string/text_add_steps_hint"
             android:inputType="numberSigned"
             android:textSize="@dimen/text_size" />
 
+        <Switch
+            android:id="@+id/swhAutoAddSteps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edtAddSteps"
+            android:layout_marginTop="@dimen/ten_dp"
+            android:gravity="center_vertical"
+            android:text="@string/text_new_day_auto_add_step"
+            android:textSize="@dimen/text_size" />
+
         <Button
             android:id="@+id/btnAddSteps"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/fifty_dp"
-            android:layout_below="@id/edtAddSteps"
+            android:layout_below="@id/swhAutoAddSteps"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/ten_dp"
             android:onClick="startStepAdd"
             android:text="@string/btn_add_step" />
 
         <TextView
             android:id="@+id/tvAppUseTip"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/ten_dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/btnAddSteps"
+            android:layout_marginTop="@dimen/ten_dp"
             android:text="@string/use_app_tip"
             android:textSize="@dimen/text_size" />
     </RelativeLayout>

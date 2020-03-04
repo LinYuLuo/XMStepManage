@@ -12,6 +12,11 @@ public class Shared {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     public static final String KEY_WORK_MODE = "currentWorkMode";
+    public static final String KEY_TRY_CONVERT_SYSTEM_APP="tryConvertSystemApp";
+    public static final String KEY_UNZIP_SQLITE_FILE="isUnzipSqliteFile";
+    public static final String KEY_AUTO_ADD_STEPS="AutoAddSteps";
+    public static final String KEY_NEW_DAY_AUTO_ADD="isNewDayAutoAddSteps";
+    public static final String KEY_CURRENT_DAY="currentDayInt";
 
     public Shared(Context context) {
         preferences = context.getSharedPreferences("app_setting", Context.MODE_PRIVATE);
